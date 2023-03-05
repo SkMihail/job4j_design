@@ -14,6 +14,10 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
+        if (columnPoint == data[rowPoint].length) {
+            rowPoint++;
+            columnPoint = 0;
+        }
         while (rowPoint < data.length && data[rowPoint].length == 0) {
             rowPoint++;
         }
@@ -25,11 +29,6 @@ public class MatrixIt implements Iterator<Integer> {
         if (!hasNext()) {
             throw new NoSuchElementException("Array is already read");
         }
-        int rsl = data[rowPoint][columnPoint++];
-        if (columnPoint == data[rowPoint].length) {
-            rowPoint++;
-            columnPoint = 0;
-        }
-        return rsl;
+        return data[rowPoint][columnPoint++];
     }
 }
