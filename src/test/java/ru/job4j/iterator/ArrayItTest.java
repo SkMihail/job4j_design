@@ -1,5 +1,6 @@
 package ru.job4j.iterator;
 
+import iterator.ArrayIt;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
