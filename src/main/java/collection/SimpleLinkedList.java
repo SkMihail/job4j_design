@@ -9,18 +9,19 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     private int size = 0;
     private int modCount = 0;
 
-    private Node<E> last;
     private Node<E> head;
 
 
     @Override
     public void add(E value) {
-        Node<E> l = last;
         Node<E> newNode = new Node<>(value, null);
-        last = newNode;
-        if (l == null) {
+        if (head == null) {
             head = newNode;
         } else {
+            Node<E> l = head;
+            while (l.next != null) {
+                l = l.next;
+            }
             l.next = newNode;
         }
         size++;
@@ -42,7 +43,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
         return new Iterator<>() {
             private Node<E> x = head;
-            int point = 0;
 
             private final int expectedModCount = modCount;
             @Override
@@ -51,14 +51,13 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                     throw new ConcurrentModificationException();
                 }
 
-                return  point < size;
+                return  x != null;
             }
 
             @Override
             public E next() {
                 E item = x.item;
                 x = x.next;
-                point++;
                 return item;
             }
         };
@@ -73,5 +72,15 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
             this.item = element;
             this.next = next;
         }
+    }
+
+    public static void main(String[] args) {
+        SimpleLinkedList<Integer> li = new SimpleLinkedList<>();
+        li.add(5);
+        li.add(2);
+        li.add(6);
+        li.add(7);
+        li.add(8);
+        System.out.println(li.get(4));
     }
 }
