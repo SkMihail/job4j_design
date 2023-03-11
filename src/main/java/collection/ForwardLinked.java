@@ -52,11 +52,7 @@ public class ForwardLinked<T> implements Iterable<T>, LinkedList<T> {
     }
 
     public void addFirst(T value) {
-        Node<T> newNode = new Node<>(value, null);
-        if (head != null) {
-            newNode.next = head;
-        }
-        head = newNode;
+        head = new Node<>(value, head);
         size++;
         modCount++;
     }
