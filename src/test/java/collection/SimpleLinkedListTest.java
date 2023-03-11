@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 
 class SimpleLinkedListTest {
@@ -88,5 +90,23 @@ class SimpleLinkedListTest {
         assertThat(second.hasNext()).isTrue();
         assertThat(second.next()).isEqualTo(2);
         assertThat(second.hasNext()).isFalse();
+    }
+
+    @Test
+    void whenHasIteratorAndAddThenHasNextExceptionThrown() {
+        Iterator<Integer> it = list.iterator();
+        assertThat(it.hasNext()).isTrue();
+        list.add(3);
+        assertThatThrownBy(it::hasNext)
+                .isInstanceOf(ConcurrentModificationException.class);
+    }
+
+    @Test
+    void whenHasIteratorAndAddThenNextExceptionThrown() {
+        Iterator<Integer> it = list.iterator();
+        assertThat(it.hasNext()).isTrue();
+        list.add(3);
+        assertThatThrownBy(it::next)
+                .isInstanceOf(ConcurrentModificationException.class);
     }
 }

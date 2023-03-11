@@ -2,6 +2,7 @@ package collection;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
 public class SimpleLinkedList<E> implements LinkedList<E> {
@@ -56,6 +57,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
             @Override
             public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
                 E item = x.item;
                 x = x.next;
                 return item;
