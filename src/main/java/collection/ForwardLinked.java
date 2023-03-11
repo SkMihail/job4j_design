@@ -51,6 +51,16 @@ public class ForwardLinked<T> implements Iterable<T>, LinkedList<T> {
         return item;
     }
 
+    public void addFirst(T value) {
+        Node<T> newNode = new Node<>(value, null);
+        if (head != null) {
+            newNode.next = head;
+        }
+        head = newNode;
+        size++;
+        modCount++;
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
@@ -92,12 +102,8 @@ public class ForwardLinked<T> implements Iterable<T>, LinkedList<T> {
     public static void main(String[] args) {
         ForwardLinked<Integer> li = new ForwardLinked<>();
         li.add(5);
-        li.add(2);
-        li.add(6);
-        li.add(7);
-        li.add(8);
-        li.deleteFirst();
-        li.deleteFirst();
+        li.addFirst(4);
         System.out.println(li.get(0));
+        System.out.println(li.get(1));
     }
 }
