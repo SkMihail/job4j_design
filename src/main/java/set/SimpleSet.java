@@ -10,11 +10,11 @@ public class SimpleSet<T> implements Set<T> {
 
     @Override
     public boolean add(T value) {
-       boolean res = false;
-       if (!contains(value)) {
-           set.add(value);
-           res = true;
-       }
+        boolean res = false;
+        if (!contains(value)) {
+            set.add(value);
+            res = true;
+        }
         return res;
     }
 
