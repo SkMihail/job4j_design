@@ -3,8 +3,6 @@ package set;
 import collection.SimpleArrayList;
 
 import java.util.Iterator;
-import java.util.Spliterator;
-import java.util.function.Consumer;
 
 public class SimpleSet<T> implements Set<T> {
 
@@ -35,15 +33,5 @@ public class SimpleSet<T> implements Set<T> {
     @Override
     public Iterator<T> iterator() {
         return set.iterator();
-    }
-
-    @Override
-    public void forEach(Consumer<? super T> action) {
-        Set.super.forEach(action);
-    }
-
-    @Override
-    public Spliterator<T> spliterator() {
-        return Set.super.spliterator();
     }
 }
