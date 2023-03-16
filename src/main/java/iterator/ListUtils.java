@@ -33,7 +33,7 @@ public class ListUtils {
         }
     }
 
-    public static <T> void removeAll(List<T> list, List<T> elements) {
-        removeIf(list, (elements::contains));
+    public static <T> void removeAll(List<T> list, List<T> elmnts) {
+        removeIf(list, (elmnts::contains));
     }
 }
