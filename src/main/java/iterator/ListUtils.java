@@ -37,4 +37,3 @@ public class ListUtils {
         removeIf(list, (elements::contains));
     }
 }
-
