@@ -33,8 +33,6 @@ public class User {
         Map<User, Object> userMap = new HashMap<>(16);
         userMap.put(user1, new Object());
         userMap.put(user2, new Object());
-
         System.out.println(userMap);
-
     }
 }
