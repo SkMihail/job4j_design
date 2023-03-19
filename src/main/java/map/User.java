@@ -16,7 +16,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    @Override
     public int hashCode() {
         return Objects.hash(name, children, birthday);
     }
