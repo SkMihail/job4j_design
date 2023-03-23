@@ -1,9 +1,6 @@
 package map;
 
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class SimpleMap<K, V> implements Map<K, V> {
 
@@ -19,10 +16,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) count / capacity >= LOAD_FACTOR) {
+        if (count >= LOAD_FACTOR * capacity) {
             expand();
         }
-        int index = key != null ? indexFor(hash(key.hashCode())) : 0;
+        int index = indexOf(key);
         boolean res = false;
         if (table[index] == null) {
             table[index] = new MapEntry<>(key, value);
@@ -41,51 +38,49 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return hash & capacity - 1;
     }
 
+    private int indexOf(K key) {
+        return indexFor(hash(Objects.hashCode(key)));
+    }
+
     private void expand() {
         capacity *= 2;
         MapEntry<K, V>[] temp = table;
         table = new MapEntry[capacity];
         count = 0;
-        for (MapEntry<K, V> kvMapEntry : temp) {
-            if (kvMapEntry != null) {
-                put(kvMapEntry.key, kvMapEntry.value);
+        for (MapEntry<K, V> entry : temp) {
+            if (entry != null) {
+                table[indexOf(entry.key)] = entry;
             }
         }
     }
 
+    private boolean keyExistAndEqualsTable(K keyRequest, int indexOfKey) {
+        return table[indexOfKey] != null
+                && hash(Objects.hashCode(keyRequest)) == hash(Objects.hashCode(table[indexOfKey].key))
+                && Objects.equals(keyRequest, table[indexOfKey].key);
+    }
+
+
     @Override
     public V get(K key) {
         V result = null;
-        if (key == null) {
-            result = table[0] != null && table[0].key == null ? table[0].value : null;
-        } else {
-            int hashKey = hash(key.hashCode());
-            int index = indexFor(hashKey);
-            if (table[index] != null) {
-                K keyFromTable = table[index].key;
-                int hashKeyFromTable = keyFromTable != null ? hash(keyFromTable.hashCode()) : 0;
-                if (hashKeyFromTable == hashKey && key.equals(keyFromTable)) {
-                    result = table[index].value;
-                }
-            }
+        int indexOfKey = indexOf(key);
+        if (keyExistAndEqualsTable(key, indexOfKey)) {
+            result = table[indexOfKey].value;
         }
         return result;
     }
 
     @Override
     public boolean remove(K key) {
-        boolean res;
-        if (key != null) {
-            int hashKey = hash(key.hashCode());
-            int index = indexFor(hashKey);
-            res = table[index] != null;
-            table[index] = null;
-        } else {
-            res = table[0] != null;
-            table[0] = null;
+        boolean res = false;
+        int indexOfKey = indexOf(key);
+        if (keyExistAndEqualsTable(key, indexOfKey)) {
+            table[indexOfKey] = null;
+            count--;
+            modCount++;
+            res = true;
         }
-        count--;
-        modCount++;
         return res;
     }
 
@@ -131,7 +126,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public String toString() {
         StringBuilder result = new StringBuilder();
         StringJoiner joiner = new StringJoiner(", ", "{", "}");
-        for (MapEntry<K, V>  mapEntry : table) {
+        for (MapEntry<K, V> mapEntry : table) {
             if (mapEntry != null) {
                 result.setLength(0);
                 result.append(mapEntry.key).append(" = ").append(mapEntry.value);
