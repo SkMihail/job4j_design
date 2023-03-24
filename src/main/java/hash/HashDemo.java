@@ -26,10 +26,10 @@ public class HashDemo {
         HashDemo hashDemo = (HashDemo) o;
         return byteField == hashDemo.byteField
                 && shortField == hashDemo.shortField
+                && charField == hashDemo.charField
                 && intField == hashDemo.intField
                 && booleanField == hashDemo.booleanField
                 && longField == hashDemo.longField
-                && charField == hashDemo.charField
                 && Float.compare(hashDemo.floatField, floatField) == 0
                 && Double.compare(hashDemo.doubleField, doubleField) == 0
                 && Objects.equals(stringField, hashDemo.stringField);
@@ -37,19 +37,6 @@ public class HashDemo {
 
     @Override
     public int hashCode() {
-        if (hashCode == 0) {
-            int result = 1;
-            result = 31 * result + stringField.hashCode();
-            result = 31 * result + (booleanField ? 1 : 0);
-            result = 31 * result + intField;
-            result = 31 * result + byteField;
-            result = 31 * result + shortField;
-            result = 31 * result + charField;
-            result = 31 * result + (int) (longField >>> 32);
-            result = 31 * result + Float.floatToIntBits(floatField);
-            result = 31 * (int) (result + Double.doubleToLongBits(doubleField) >>> 32);
-            hashCode = result;
-        }
-        return hashCode;
+        return Objects.hash(byteField, shortField, charField, intField, booleanField, longField, floatField, doubleField, stringField);
     }
 }
