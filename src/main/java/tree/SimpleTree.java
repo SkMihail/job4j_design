@@ -9,13 +9,13 @@ public class SimpleTree<E> implements Tree<E> {
         this.root = new Node<>(root);
     }
 
+
     @Override
     public boolean add(E parent, E child) {
         boolean rsl = false;
         Optional<Node<E>> temp = findBy(parent);
         if (temp.isPresent() && findBy(child).isEmpty()) {
-            temp.get().children.add(new Node<>(child));
-            rsl = true;
+            rsl = temp.get().children.add(new Node<>(child));
         }
         return rsl;
     }
@@ -34,5 +34,9 @@ public class SimpleTree<E> implements Tree<E> {
             data.addAll(el.children);
         }
         return rsl;
+    }
+
+    public boolean isBinary() {
+        return false;
     }
 }
