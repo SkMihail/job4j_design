@@ -1,10 +1,10 @@
 package io;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class EvenNumberFile {
     private static List<Integer> numReaderFromFile(String path) {
@@ -14,14 +14,13 @@ public class EvenNumberFile {
             while ((read = in.read()) != -1) {
                 fileStuff.append((char) read);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-         return Stream.of(fileStuff.toString())
-                .map(x -> x.split(System.lineSeparator()))
-                .flatMap(Arrays::stream)
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());
+         return Arrays.stream(fileStuff.toString().split(System.lineSeparator()))
+                 .mapToInt(Integer::parseInt)
+                 .boxed()
+                 .collect(Collectors.toList());
     }
 
     private static void printEvenOrOdd(List<Integer> numList) {
