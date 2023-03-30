@@ -2,9 +2,7 @@ package io;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EvenNumberFile {
     private static List<Integer> numReaderFromFile(String path) {
@@ -17,10 +15,9 @@ public class EvenNumberFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-         return Arrays.stream(fileStuff.toString().split(System.lineSeparator()))
-                 .mapToInt(Integer::parseInt)
-                 .boxed()
-                 .collect(Collectors.toList());
+        return fileStuff.toString().lines()
+                .map(Integer::parseInt)
+                .toList();
     }
 
     private static void printEvenOrOdd(List<Integer> numList) {
