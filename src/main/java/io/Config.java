@@ -22,13 +22,19 @@ public class Config {
     private static Map<String, String> checkAndPrepareLine(String line) {
         Map<String, String> res = Stream.of(line)
                 .filter(x -> !x.startsWith("#") && !x.isEmpty())
+                .peek(Config::checkLineForContainSign)
                 .collect(Collectors.toMap(x -> x.substring(0, x.indexOf("=")),
                         x -> x.substring(x.indexOf("=") + 1)));
-
         if (res.containsKey("") || res.containsValue("")) {
             throw new IllegalArgumentException("Line contains an invalid template");
         }
         return res;
+    }
+
+    private static void checkLineForContainSign(String line) {
+        if (!line.contains("=")) {
+            throw new IllegalArgumentException("Line contains an invalid template");
+        }
     }
 
     public void load() {

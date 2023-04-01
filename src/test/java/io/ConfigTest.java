@@ -49,4 +49,14 @@ class ConfigTest {
         String actualMessage = exception.getMessage();
         assertThat(expectedMessage).isEqualTo(actualMessage);
     }
+
+    @Test
+    void testLoadWhenNoOneSign() {
+        String path = "data/with_illegal_Template3.properties";
+        Config config = new Config(path);
+        Exception exception = assertThrows(IllegalArgumentException.class, config::load);
+        String expectedMessage = "Line contains an invalid template";
+        String actualMessage = exception.getMessage();
+        assertThat(expectedMessage).isEqualTo(actualMessage);
+    }
 }
