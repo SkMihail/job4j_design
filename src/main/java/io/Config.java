@@ -19,7 +19,7 @@ public class Config {
         this.path = path;
     }
 
-    private static Map<String, String> checkLineForTemplate(String line) {
+    private static Map<String, String> checkAndPrepareLine(String line) {
         Map<String, String> res = Stream.of(line)
                 .filter(x -> !x.startsWith("#") && !x.isEmpty())
                 .collect(Collectors.toMap(x -> x.substring(0, x.indexOf("=")),
@@ -34,7 +34,7 @@ public class Config {
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
             reader.lines()
-                    .forEach(x -> values.putAll(checkLineForTemplate(x)));
+                    .forEach(x -> values.putAll(checkAndPrepareLine(x)));
         } catch (IOException e) {
             e.printStackTrace();
         }

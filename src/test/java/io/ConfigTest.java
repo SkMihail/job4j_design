@@ -41,7 +41,7 @@ class ConfigTest {
     }
 
     @Test
-    void testLoadWhenOneSignOfEqualsAtEnd() {
+    void testLoadWhenOneSignOfEqualsEnd() {
         String path = "data/with_illegal_Template2.properties";
         Config config = new Config(path);
         Exception exception = assertThrows(IllegalArgumentException.class, config::load);
