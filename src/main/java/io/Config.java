@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.StringJoiner;
-import java.util.stream.Stream;
 
 
 public class Config {
@@ -19,26 +18,19 @@ public class Config {
         this.path = path;
     }
 
-    private static Map<String, String> checkAndPrepareLine(String line) throws IllegalArgumentException {
-        Map<String, String> res = Stream.of(line)
-                .filter(x -> !x.startsWith("#") && !x.isEmpty())
-                .peek(x -> {
-                    if (!x.contains("=")) {
-                        throw new IllegalArgumentException("Line contains an invalid template");
-                    }
-                })
-                .collect(Collectors.toMap(x -> x.substring(0, x.indexOf("=")),
-                        x -> x.substring(x.indexOf("=") + 1)));
-        if (res.containsKey("") || res.containsValue("")) {
+    private static  void checkLine(String line) throws IllegalArgumentException {
+        if (!line.contains("=") || line.startsWith("=") || line.matches("^[^=]*=$")) {
             throw new IllegalArgumentException("Line contains an invalid template");
         }
-        return res;
     }
 
     public void load() {
         try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
-            reader.lines()
-                    .forEach(x -> values.putAll(checkAndPrepareLine(x)));
+            values.putAll(reader.lines()
+                    .filter(x -> !x.startsWith("#") && !x.isEmpty())
+                    .peek(Config::checkLine)
+                    .collect(Collectors.toMap(x -> x.substring(0, x.indexOf("=")),
+                            x -> x.substring(x.indexOf("=") + 1))));
         } catch (IOException e) {
             e.printStackTrace();
         }
