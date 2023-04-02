@@ -19,7 +19,7 @@ public class Config {
         this.path = path;
     }
 
-    private static Map<String, String> checkAndPrepareLine(String line) {
+    private static Map<String, String> checkAndPrepareLine(String line) throws IllegalArgumentException {
         Map<String, String> res = Stream.of(line)
                 .filter(x -> !x.startsWith("#") && !x.isEmpty())
                 .peek(x -> {
