@@ -5,7 +5,10 @@ import java.util.Arrays;
 
 public class Dir {
     public static void main(String[] args) {
-        File projects = new File("c:\\projects\\job4j_design");
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
+        }
+        File projects = new File(args[0]);
         if (!projects.exists()) {
             throw new IllegalArgumentException(String.format("Not exist %s", projects.getAbsoluteFile()));
         }
