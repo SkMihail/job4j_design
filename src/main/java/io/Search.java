@@ -14,7 +14,6 @@ public class Search {
             throw new IllegalArgumentException("Введено неверное количество аргументов");
         }
         if (!Paths.get(args[0]).toFile().exists()) {
-            System.out.println(Paths.get(args[0]).toFile().exists());
             throw new IllegalArgumentException(String.format("Некорректно указан путь: %s", args[0]));
         }
         if (!args[1].matches("\\.[a-zA-Z]*")) {
@@ -22,7 +21,6 @@ public class Search {
         }
     }
     public static void main(String[] args) throws IOException {
-        System.out.println(Paths.get(args[0]).toFile().exists());
         validateInput(args);
         Path start = Paths.get(args[0]);
         System.out.println(start);
