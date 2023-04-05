@@ -13,14 +13,16 @@ public class Search {
         if (args.length != 2) {
             throw new IllegalArgumentException("Введено неверное количество аргументов");
         }
-        if (!args[0].matches("^[a-z]:(\\\\[a-zA-Z]*)*")) {
-            throw new IllegalArgumentException("Некорректно указан путь: " + args[0]);
+        if (!Paths.get(args[0]).toFile().exists()) {
+            System.out.println(Paths.get(args[0]).toFile().exists());
+            throw new IllegalArgumentException(String.format("Некорректно указан путь: %s", args[0]));
         }
         if (!args[1].matches("\\.[a-zA-Z]*")) {
-            throw new IllegalArgumentException("Некорректно указано раширение " + args[1]);
+            throw new IllegalArgumentException(String.format("Некорректно указано раширение: %s ", args[1]));
         }
     }
     public static void main(String[] args) throws IOException {
+        System.out.println(Paths.get(args[0]).toFile().exists());
         validateInput(args);
         Path start = Paths.get(args[0]);
         System.out.println(start);
