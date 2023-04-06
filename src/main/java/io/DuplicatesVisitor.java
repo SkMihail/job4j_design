@@ -2,7 +2,6 @@ package io;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -14,9 +13,7 @@ import java.util.stream.Collectors;
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     private static Map<Path, FileProperty> result = new HashMap<>();
 
-    public void printDup(String dir) throws IOException {
-        Path file = Path.of(dir);
-        Files.walkFileTree(file, this);
+    public void printDuplicates() {
         Map<FileProperty, List<Path>> duplicates = result.entrySet().stream()
                 .collect(Collectors.groupingBy(Map.Entry::getValue,
                         Collectors.mapping(Map.Entry::getKey, Collectors.toList())));
@@ -26,7 +23,6 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
                 .forEach(entry ->
                         System.out.println(entry.getKey()
                                 + " повторяется в директориях: " + "\n" +  entry.getValue()));
-        System.out.printf("Всего повторяющихся файлов: %d", duplicates.size());
     }
 
     @Override
