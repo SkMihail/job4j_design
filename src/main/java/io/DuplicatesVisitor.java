@@ -14,11 +14,11 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     private static Map<FileProperty, List<Path>> result = new HashMap<>();
 
     public void printDuplicates() {
-       result.entrySet().stream()
-               .filter(x -> x.getValue().size() > 1)
-               .forEach(entry ->
+        result.entrySet().stream()
+                .filter(x -> x.getValue().size() > 1)
+                .forEach(entry ->
                         System.out.println(entry.getKey()
-                                + " повторяется в директориях: " + "\n" +  entry.getValue()));
+                                + " повторяется в директориях: " + "\n" + entry.getValue()));
     }
 
     @Override
