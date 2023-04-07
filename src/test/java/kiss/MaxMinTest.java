@@ -52,9 +52,9 @@ class MaxMinTest {
     @Test
     void whenListHasOneElement() {
         list = List.of(10);
-        assertThatThrownBy(() -> tester.max(list, Integer::compareTo))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("Переданная коллекция содержит один элемент: 10");
+        int expected = 10;
+        int result = tester.max(list, Integer::compareTo);
+        assertThat(result).isEqualTo(expected);
     }
 
 }

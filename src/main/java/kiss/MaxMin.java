@@ -16,10 +16,11 @@ public class MaxMin {
     private  <T> T compareVal(List<T> value, BiPredicate<T, T> predicate) {
         checkValue(value);
         T val = value.get(0);
-        for (int i = 1; i < value.size(); i++) {
-            T current = value.get(i);
-            if (predicate.test(current, val)) {
-                val = current;
+        if (value.size() != 1) {
+            for (T current : value) {
+                if (predicate.test(current, val)) {
+                    val = current;
+                }
             }
         }
         return val;
@@ -31,10 +32,6 @@ public class MaxMin {
         }
         if (value.isEmpty()) {
             throw new IllegalArgumentException("Переданная коллекция не содержит данных");
-        }
-        if (value.size() == 1) {
-            throw new IllegalArgumentException(
-                    String.format("Переданная коллекция содержит один элемент: %s", value.get(0)));
         }
     }
 }
