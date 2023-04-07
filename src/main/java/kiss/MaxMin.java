@@ -17,7 +17,8 @@ public class MaxMin {
         checkValue(value);
         T val = value.get(0);
         if (value.size() != 1) {
-            for (T current : value) {
+            for (int i = 1; i < value.size(); i++) {
+                T current = value.get(i);
                 if (predicate.test(current, val)) {
                     val = current;
                 }
