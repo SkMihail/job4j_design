@@ -23,18 +23,6 @@ public class Zip {
         }
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            System.out.println(source.getPath());
-            try (BufferedInputStream forZip = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(forZip.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private static void validateArgs(ArgsName inputArgs) {
         File dirForZip = new File(inputArgs.get("d"));
         if (!dirForZip.exists()) {
@@ -49,6 +37,9 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
+        if (args.length != 3) {
+            throw new IllegalArgumentException(String.format("Must be 3 arguments, but was:  %d", args.length));
+        }
         Zip zip = new Zip();
         ArgsName argsForZip = ArgsName.of(args);
         validateArgs(argsForZip);
