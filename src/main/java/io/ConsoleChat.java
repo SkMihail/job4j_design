@@ -24,21 +24,25 @@ public class ConsoleChat {
         List<String> answers = readPhrases();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String userQuestion = "Введите слово/фразу: ";
-        System.out.print(userQuestion);
+        System.out.println(userQuestion);
         String ln = System.lineSeparator();
-        while (!OUT.equals(userQuestion = reader.readLine())) {
+        do {
+            userQuestion = reader.readLine();
             log.add(userQuestion + ln);
             if (STOP.equals(userQuestion)) {
-                while (!CONTINUE.equals(userQuestion)) {
+                System.out.println("Введите 'продолжить', чтобы продолжить: ");
+                do {
                     userQuestion = reader.readLine();
                     log.add(userQuestion + ln);
-                }
+                } while (!CONTINUE.equals(userQuestion) && !OUT.equals(userQuestion));
             }
-            String answer = answers.get((int) ((answers.size()) * Math.random())) + ln;
-            System.out.println(answer);
-            log.add(answer);
-        }
-        log.add(userQuestion + ln + getCurrentDateTime());
+            if (!OUT.equals(userQuestion)) {
+                String answer = answers.get((int) ((answers.size()) * Math.random())) + ln;
+                System.out.println(answer);
+                log.add(answer);
+            }
+        } while (!userQuestion.equals(OUT));
+        log.add(userQuestion + ln + getCurrentDateTime() + ln);
         saveLog(log);
         reader.close();
     }
