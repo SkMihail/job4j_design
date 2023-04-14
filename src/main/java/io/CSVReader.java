@@ -1,5 +1,6 @@
 package io;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -9,8 +10,12 @@ public class CSVReader {
 
     private static ArgsName validate(String[] args) {
         ArgsName argsName = ArgsName.of(args);
-        argsName.get("path");
-        argsName.get("out");
+        if (!new File(argsName.get("path")).exists()) {
+            throw new IllegalArgumentException(String.format("Некорректно указан источник: %s", argsName.get("path")));
+        }
+        if (!new File(argsName.get("out")).exists()) {
+            throw new IllegalArgumentException(String.format("Некорректно указан путь назначения: %s", argsName.get("out")));
+        }
         argsName.get("delimiter");
         argsName.get("filter");
         return argsName;
