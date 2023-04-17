@@ -15,9 +15,10 @@ public class UsageLog4j {
         boolean bool = true;
         float fl = Float.MAX_VALUE;
         double db = Double.MAX_VALUE;
+        long lg = 1L;
         String str = "some value";
 
         LOG.debug("use different variables: byte={} short={} int={} char={}", by, sh, num, ch);
-        LOG.warn("use different variables: boolean={} float={} double={} String={}", bool, fl, db, str);
+        LOG.warn("use different variables: boolean={} float={} double={} long={} String={}", bool, fl, db, lg, str);
     }
 }
