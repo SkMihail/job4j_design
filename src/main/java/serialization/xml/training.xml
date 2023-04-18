@@ -1,0 +1,13 @@
+<?xml version="1.1" encoding="utf-8" ?>
+<train isStareted="true" minutes="90">
+    <exercises>
+        <exrecise>push-ups</exrecise>
+        <exrecise>squats</exrecise>
+        <exrecise>jump rope</exrecise>
+    </exercises>
+    <person>
+        <name>KungFuPanda</name>
+        <age>20</age>
+        <levelOfTraining>0</levelOfTraining>
+    </person>
+</train>
