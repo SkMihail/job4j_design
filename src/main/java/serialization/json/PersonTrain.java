@@ -1,5 +1,11 @@
 package serialization.json;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 class PersonTrain {
     String name;
     private int age;
@@ -9,6 +15,9 @@ class PersonTrain {
         this.name = name;
         this.age = age;
         this.levelOfTraining = levelOfTraining;
+    }
+
+    public PersonTrain() {
     }
 
     @Override

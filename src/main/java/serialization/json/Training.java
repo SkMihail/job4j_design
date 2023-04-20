@@ -3,13 +3,26 @@ package serialization.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.*;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Arrays;
-
+@XmlRootElement(name = "training")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Training {
+    @XmlAttribute
     private boolean isStarted;
+    @XmlAttribute
     private int minutes;
+    @XmlElementWrapper
+    @XmlElement(name = "exercise")
     private String[] exercises;
+    @XmlElement
     private PersonTrain person;
+
 
     public Training(boolean isStarted, int minutes, String[] exercises, PersonTrain person) {
         this.isStarted = isStarted;
@@ -18,7 +31,10 @@ public class Training {
         this.person = person;
     }
 
-    public static void main(String[] args) {
+    public Training() {
+    }
+
+    public static void main(String[] args) throws Exception {
         Training weeklyTrain = new Training(true, 90,
                 new String[]{"push-ups", "squats", "jump rope"},
                 new PersonTrain("KungFuPanda", 20, 0));
@@ -33,6 +49,23 @@ public class Training {
 
         final Training specialTrain = gson.fromJson(trainFromJSON, Training.class);
         System.out.println(specialTrain);
+
+        JAXBContext context = JAXBContext.newInstance(Training.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(weeklyTrain, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
+
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Training result = (Training) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
+
     }
 
     @Override
