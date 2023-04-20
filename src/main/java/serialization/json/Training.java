@@ -3,6 +3,8 @@ package serialization.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.json.JSONObject;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
@@ -10,6 +12,7 @@ import javax.xml.bind.annotation.*;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
+
 @XmlRootElement(name = "training")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Training {
@@ -43,9 +46,9 @@ public class Training {
 
         final String trainFromJSON =
                 "{\"isStarted\":true,"
-                + "\"minutes\":300,"
-                + "\"exercises\":[\"push-ups\",\"squats\",\"jump rope\",\"run\", \"sleep\"],"
-                + "\"person\":{\"name\":\"KungFuPanda\",\"age\":20,\"levelOfTraining\":10}}";
+                        + "\"minutes\":300,"
+                        + "\"exercises\":[\"push-ups\",\"squats\",\"jump rope\",\"run\", \"sleep\"],"
+                        + "\"person\":{\"name\":\"KungFuPanda\",\"age\":20,\"levelOfTraining\":10}}";
 
         final Training specialTrain = gson.fromJson(trainFromJSON, Training.class);
         System.out.println(specialTrain);
@@ -66,7 +69,15 @@ public class Training {
             System.out.println(result);
         }
 
+        System.out.println("Преобразование в JSONObject и json строку с помощью org.json");
+        JSONObject jsonPersonTrain = new JSONObject(
+                "{\"name\":\"KungFuPanda\",\"age\":20,\"levelOfTraining\":10}");
+        JSONObject jsonWeeklyTraining = new JSONObject(weeklyTrain);
+        jsonWeeklyTraining.put("person", jsonPersonTrain);
+        System.out.println(jsonPersonTrain);
+        System.out.println(jsonWeeklyTraining);
     }
+
 
     @Override
     public String toString() {
@@ -76,6 +87,38 @@ public class Training {
                 + ", minutes=" + minutes
                 + ", exercises=" + Arrays.toString(exercises)
                 + '}';
+    }
+
+    public boolean isStarted() {
+        return isStarted;
+    }
+
+    public void setStarted(boolean started) {
+        isStarted = started;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public String[] getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(String[] exercises) {
+        this.exercises = exercises;
+    }
+
+    public PersonTrain getPerson() {
+        return person;
+    }
+
+    public void setPerson(PersonTrain person) {
+        this.person = person;
     }
 }
 

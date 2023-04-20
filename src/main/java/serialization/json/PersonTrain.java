@@ -28,4 +28,28 @@ class PersonTrain {
                 + ", levelOfTraining=" + levelOfTraining
                 + '}';
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getLevelOfTraining() {
+        return levelOfTraining;
+    }
+
+    public void setLevelOfTraining(int levelOfTraining) {
+        this.levelOfTraining = levelOfTraining;
+    }
 }
