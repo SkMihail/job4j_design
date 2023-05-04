@@ -50,12 +50,15 @@ insert into car(name, body_id, engine_id, transmission_id) values
 	('Isuzu Bighorn', 2, 1, null);
 -- 1. Вывести список всех машин и все привязанные к ним детали.
 -- Нужно учесть, что каких-то деталей машина может и не содержать. 
--- В таком случае значение может быть null при выводе	
-select c.name as "car_name", b.name as "body_name", e.name as "engine_name", t.name as "transmission_name"
-from car as c
-left join car_bodies b on c.body_id = b.id
-left join car_engines e on c.engine_id = e.id
-left join car_transmissions t on c.transmission_id = t.id;
+-- В таком случае значение может быть null при выводе
+create view car_park 
+as select c.name as "car_name", b.name as "body_name", e.name as "engine_name", t.name as "transmission_name"
+		from car as c
+		left join car_bodies b on c.body_id = b.id
+		left join car_engines e on c.engine_id = e.id
+		left join car_transmissions t on c.transmission_id = t.id;
+		
+select * from car_park;
 
 --2. Вывести кузова, которые не используются НИ в одной машине. 
 select b.name from car_bodies b left join car c
