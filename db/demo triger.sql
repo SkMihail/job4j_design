@@ -13,33 +13,26 @@ delete from products;
 --1)Триггер должен срабатывать после вставки данных, для любого товара
 --и просто насчитывать налог на товар (нужно прибавить налог к цене товара).
 --Действовать он должен не на каждый ряд, а на запрос (statement уровень)
-create trigger tax_trigger
-    after insert on products
-    referencing new table as inserted
-    for each statement
-    execute procedure tax();
-	
 create or replace function tax()
     returns trigger as
 $$
     BEGIN
         update products
         set price = price + price * 0.2
-        where id = (select id from inserted);
+        where id in (select id from inserted);
         return new;
     END;
 $$
 LANGUAGE 'plpgsql';	
 
+create trigger tax_trigger
+    after insert on products
+    referencing new table as inserted
+    for each statement
+    execute procedure tax();
+
 --2)Триггер должен срабатывать до вставки данных и насчитывать налог на товар
 --(нужно прибавить налог к цене товара). Здесь используем row уровень.
-
-create trigger before_trigger
-    before insert
-    on products
-    for each row
-    execute procedure before_func();
-	
 create or replace function before_func()
     returns trigger as
 $$
@@ -49,6 +42,12 @@ $$
     END;
 $$
 LANGUAGE 'plpgsql';	
+
+create trigger before_trigger
+    before insert
+    on products
+    for each row
+    execute procedure before_func();
 
 --3)Нужно написать триггер на row уровне, который сразу после
 --вставки продукта в таблицу products, будет заносить имя, 
