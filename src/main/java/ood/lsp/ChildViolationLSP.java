@@ -16,7 +16,7 @@ class ChildViolationLSP extends ViolationLSP {
     }
 
     @Override
-    public String charging(int timeToChargeInMin) {
+    public int charging(int timeToChargeInMin) {
         if (timeToChargeInMin < 0) {
             throw new NoSuchElementException("timeToChargeInMin can't be under zero!");
         }
@@ -27,6 +27,6 @@ class ChildViolationLSP extends ViolationLSP {
             throw new UnsupportedOperationException("Low timeToChargeInMin - can't charge this device");
         }
         setCurrentPower(timeToChargeInMin * 2);
-        return "Power after charging: " + getCurrentPower();
+        return getCurrentPower();
     }
 }
