@@ -4,9 +4,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-
+@Disabled
 class TransportTest {
-    @Disabled
     @Test
     public void whenCarGetSize() {
         Transport car = new Car();

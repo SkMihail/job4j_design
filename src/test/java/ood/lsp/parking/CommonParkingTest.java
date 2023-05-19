@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-
+@Disabled
 class CommonParkingTest {
 
-
-    @Disabled
     @Test
     public void whenParkingIsFreeAndEnoughThenAllTrue() {
         CommonParking parking = new CommonParking(1, 2);
