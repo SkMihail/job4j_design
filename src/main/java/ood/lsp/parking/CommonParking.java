@@ -25,9 +25,7 @@ public class CommonParking implements Valet {
         } else if (vehicleSize > 1 && countTruck == truckPlaces) {
             if (carPlaces - countCar >= vehicleSize) {
                 result = true;
-                for (int i = 0; i < vehicleSize; i++) {
-                    countCar++;
-                }
+                countCar += vehicleSize;
             }
         }
         return result;
