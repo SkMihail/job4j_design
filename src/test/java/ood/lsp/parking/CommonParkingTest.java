@@ -1,10 +1,9 @@
 package ood.lsp.parking;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-@Disabled
+
 class CommonParkingTest {
 
     @Test
@@ -12,7 +11,7 @@ class CommonParkingTest {
         CommonParking parking = new CommonParking(1, 2);
         Transport car = new Car();
         Transport truck = new Truck();
-        Transport trailerTruck = new Truck();
+        Transport trailerTruck = new TrailerTruck(truck);
         assertThat(parking.parkTransport(car)).isTrue();
         assertThat(parking.parkTransport(truck)).isTrue();
         assertThat(parking.parkTransport(trailerTruck)).isTrue();
@@ -23,7 +22,7 @@ class CommonParkingTest {
         CommonParking parking = new CommonParking(1, 1);
         Transport car = new Car();
         Transport truck = new Truck();
-        Transport trailerTruck = new Truck();
+        Transport trailerTruck = new TrailerTruck(truck);
         assertThat(parking.parkTransport(car)).isTrue();
         assertThat(parking.parkTransport(truck)).isTrue();
         assertThat(parking.parkTransport(trailerTruck)).isFalse();
@@ -34,14 +33,14 @@ class CommonParkingTest {
         CommonParking parking = new CommonParking(5, 1);
         Transport car = new Car();
         Transport truck = new Truck();
-        Transport trailerTruck = new Truck();
+        Transport trailerTruck = new TrailerTruck(truck);
         assertThat(parking.parkTransport(car)).isTrue();
         assertThat(parking.parkTransport(truck)).isTrue();
         assertThat(parking.parkTransport(trailerTruck)).isTrue();
     }
     @Test
     public void whenTruckPlacesEnoughButCarPlacesNotEnoughThanFalseForOtherCar() {
-        CommonParking parking = new CommonParking(1, 2);
+        CommonParking parking = new CommonParking(1, 3);
         Transport car = new Car();
         Transport otherCar = new Car();
         Transport trailerTruck = new Truck();

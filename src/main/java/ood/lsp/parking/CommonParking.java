@@ -14,6 +14,22 @@ public class CommonParking implements Valet {
 
     @Override
     public boolean parkTransport(Transport transport) {
-        return false;
+        boolean result = false;
+        int vehicleSize = transport.getSize();
+        if (vehicleSize == 1 && countCar < carPlaces) {
+            countCar++;
+            result = true;
+        } else if (vehicleSize > 1 && countTruck < truckPlaces) {
+            countTruck++;
+            result = true;
+        } else if (vehicleSize > 1 && countTruck == truckPlaces) {
+            if (carPlaces - countCar >= vehicleSize) {
+                result = true;
+                for (int i = 0; i < vehicleSize; i++) {
+                    countCar++;
+                }
+            }
+        }
+        return result;
     }
 }

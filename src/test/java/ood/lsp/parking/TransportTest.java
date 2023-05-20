@@ -1,10 +1,9 @@
 package ood.lsp.parking;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-@Disabled
+
 class TransportTest {
     @Test
     public void whenCarGetSize() {
@@ -22,7 +21,8 @@ class TransportTest {
 
     @Test
     public void whenTrailerTruckGetSize() {
-        Transport trailerTruck = new Truck();
+        Transport truck = new Truck();
+        Transport trailerTruck = new TrailerTruck(truck);
         int expected = 4;
         assertThat(trailerTruck.getSize()).isEqualTo(expected);
     }
