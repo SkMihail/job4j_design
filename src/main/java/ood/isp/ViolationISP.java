@@ -1,4 +1,4 @@
-package ood.lsp.isp;
+package ood.isp;
 
 public class ViolationISP {
 }

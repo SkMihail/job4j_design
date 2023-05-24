@@ -1,4 +1,4 @@
-package ood.lsp.isp;
+package ood.isp;
 
 class Jigsaw extends Saw {
     public Jigsaw() {
