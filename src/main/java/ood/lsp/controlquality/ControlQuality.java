@@ -1,5 +1,6 @@
 package ood.lsp.controlquality;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControlQuality {
@@ -16,6 +17,15 @@ public class ControlQuality {
                 break;
             }
         }
+    }
+
+    public void reSort() {
+        List<Food> temp = new ArrayList<>();
+        for (Store store : storages) {
+            temp.addAll(store.findAll());
+            store.findAll().clear();
+        }
+        temp.forEach(this::sort);
     }
 
     List<Store> getStorages() {

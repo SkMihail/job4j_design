@@ -38,6 +38,26 @@ class ControlQualityTest {
         assertThat(trash.findAll()).contains(cheese2);
     }
     @Test
+    public void testReSort() {
+        LocalDateTime time = LocalDateTime.now();
+        Food cheese = new Food(
+                "Голландский", time.minusDays(5), time.plusDays(5), 20);
+        Food apple = new Fruit(
+                "apple",  time.minusDays(1), time.plusDays(4), 100);
+        Food cheese2 = new Food(
+                "Голландский", time.minusDays(5), time.minusDays(1), 5);
+        controller.sort(cheese2);
+        controller.sort(cheese);
+        controller.sort(apple);
+        assertThat(warehouse.findAll()).contains(apple);
+        assertThat(shop.findAll()).contains(cheese);
+        assertThat(trash.findAll()).contains(cheese2);
+        warehouse.findAll().get(0).setCreateDate(time.plusDays(10));
+        shop.findAll().get(0).setCreateDate(time.plusDays(10));
+        controller.reSort();
+        assertThat(trash.findAll()).contains(cheese2, cheese, apple);
+    }
+    @Test
     public void testGetStorages() {
         assertThat(controller.getStorages()).contains(warehouse, shop, trash);
     }
