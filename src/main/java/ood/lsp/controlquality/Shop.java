@@ -5,7 +5,7 @@ public class Shop extends AbstractStore {
 
     public Shop() {
         super();
-        acceptor = new AcceptorByFresh((a) -> a < 75 && a > 25);
+        acceptor = new AcceptorByFresh(a -> a < 75 && a > 25);
     }
 
     @Override
